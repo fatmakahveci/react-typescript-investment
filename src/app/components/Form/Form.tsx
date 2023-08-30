@@ -2,6 +2,11 @@
 
 import { FormEvent } from "react";
 
+type FormModel = {
+    "current-savings": number,
+    
+};
+
 const Form: () => JSX.Element = () => {
     const submitHandler = (e: FormEvent<Element>) => {
         e.preventDefault(); // avoid page reloading
