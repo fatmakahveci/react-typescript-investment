@@ -3,7 +3,7 @@
 import { FormEvent } from "react";
 
 const Form: () => JSX.Element = () => {
-    const submitHandler = (e: FormEvent) => {
+    const submitHandler = (e: FormEvent<Element>) => {
         e.preventDefault(); // avoid page reloading
         // TODO: Complete
     };
