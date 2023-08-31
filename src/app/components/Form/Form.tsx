@@ -10,7 +10,6 @@ const Form: () => JSX.Element = () => {
 
     const submitHandler = (e: FormEvent) => {
         e.preventDefault(); // avoid page reloading
-        // TODO: Complete
     };
 
     const resetHandler = () => {
