@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import { FormEvent, useState } from "react";
-import { FormModel } from "@/shared/types/Types";
-import { INITIAL_VALUES } from "@/shared/Constants";
+import { INITIAL_VALUES } from '@/shared/Constants';
+import { FormModel } from '@/shared/types/Types';
+import { FormEvent, useState } from 'react';
+import './Form.css';
 
 const Form: () => JSX.Element = () => {
     const [formData, setFormData] = useState<FormModel>();

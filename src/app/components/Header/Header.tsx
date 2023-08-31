@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import logo from "../../../assets/investment-calculator-logo.png";
+import Image from 'next/image';
+import logo from '../../../assets/investment-calculator-logo.png';
+import './Header.css';
 
 const Header: () => JSX.Element = () => {
     return (

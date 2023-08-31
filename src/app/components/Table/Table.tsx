@@ -1,4 +1,6 @@
-"use client";
+'use client';
+
+import './Table.css';
 
 // TODO: Show below table conditionally (only once result data is available)
 // TODO: Show fallback text if no data is available
