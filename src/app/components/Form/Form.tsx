@@ -1,20 +1,28 @@
 "use client";
 
-import { FormEvent } from "react";
-
-type FormModel = {
-    "current-savings": number,
-    
-};
+import { FormEvent, useState } from "react";
+import { FormModel } from "@/shared/types/Types";
+import { INITIAL_VALUES } from "@/shared/Constants";
 
 const Form: () => JSX.Element = () => {
-    const submitHandler = (e: FormEvent<Element>) => {
+    const [formData, setFormData] = useState<FormModel>(INITIAL_VALUES);
+
+    const submitHandler = (e: FormEvent) => {
         e.preventDefault(); // avoid page reloading
         // TODO: Complete
     };
 
     const resetHandler = () => {
-        // TODO: Complete
+        setFormData(INITIAL_VALUES);
+    };
+
+    const handleChange = (input: string, value: string) => {
+        setFormData((prevValue: any) => {
+            return {
+                ...prevValue,
+                [input]: +value
+            }
+        });
     };
 
     return (
@@ -22,23 +30,49 @@ const Form: () => JSX.Element = () => {
             <div className="input-group">
                 <p>
                     <label htmlFor="current-savings">Current Savings ($)</label>
-                    <input type="number" id="current-savings" />
+                    <input
+                        type="number"
+                        name="current-savings"
+                        id="current-savings"
+                        placeholder="Enter the value..."
+                        value={formData?.["current-savings"]}
+                        onChange={(e) => handleChange("current-savings", e.target.value)}
+                    />
                 </p>
                 <p>
                     <label htmlFor="yearly-contribution">Yearly Savings ($)</label>
-                    <input type="number" id="yearly-contribution" />
+                    <input
+                        type="number"
+                        name="yearly-contribution"
+                        id="yearly-contribution"
+                        placeholder="Enter the value..."
+                        value={formData?.["yearly-contribution"]}
+                        onChange={(e) => handleChange("yearly-contribution", e.target.value)}
+                    />
                 </p>
             </div>
             <div className="input-group">
                 <p>
-                    <label htmlFor="expected-return">
-                        Expected Interest (%, per year)
-                    </label>
-                    <input type="number" id="expected-return" />
+                    <label htmlFor="expected-return">Expected Interest (%, per year)</label>
+                    <input
+                        type="number"
+                        name="expected-return"
+                        id="expected-return"
+                        placeholder="Enter the value..."
+                        value={formData?.["expected-return"]}
+                        onChange={(e) => handleChange("expected-return", e.target.value)}
+                    />
                 </p>
                 <p>
                     <label htmlFor="duration">Investment Duration (years)</label>
-                    <input type="number" id="duration" />
+                    <input
+                        type="number"
+                        name="duration"
+                        id="duration"
+                        placeholder="Enter the value..."
+                        value={formData?.["duration"]}
+                        onChange={(e) => handleChange("duration", e.target.value)}
+                    />
                 </p>
             </div>
             <p className="actions">
