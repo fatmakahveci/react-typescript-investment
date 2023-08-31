@@ -1,8 +1,14 @@
 'use client';
 
 import './Table.css';
+import { YearlyData } from '@/shared/types/Types';
+import { FC } from 'react';
 
-const Table: () => JSX.Element = () => {
+interface Props {
+    data: YearlyData[];
+};
+
+const Table: FC<Props> = ({ data }): JSX.Element => {
     return (
         <table className="result">
             <thead>
