@@ -2,14 +2,19 @@
 
 import { INITIAL_VALUES } from '@/shared/Constants';
 import { FormModel } from '@/shared/types/Types';
-import { FormEvent, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import './Form.css';
 
-const Form: () => JSX.Element = () => {
-    const [formData, setFormData] = useState<FormModel>();
+interface Props {
+    onCalculate: (formData: FormModel) => void
+};
+
+const Form: FC<Props> = ({ onCalculate }): JSX.Element => {
+    const [formData, setFormData] = useState<FormModel>(INITIAL_VALUES);
 
     const submitHandler = (e: FormEvent) => {
         e.preventDefault(); // avoid page reloading
+        onCalculate(formData);
     };
 
     const resetHandler = () => {
