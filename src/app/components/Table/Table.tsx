@@ -2,8 +2,6 @@
 
 import './Table.css';
 
-// TODO: Show below table conditionally (only once result data is available)
-// TODO: Show fallback text if no data is available
 const Table: () => JSX.Element = () => {
     return (
         <table className="result">
