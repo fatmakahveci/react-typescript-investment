@@ -5,7 +5,7 @@ import { FormModel } from "@/shared/types/Types";
 import { INITIAL_VALUES } from "@/shared/Constants";
 
 const Form: () => JSX.Element = () => {
-    const [formData, setFormData] = useState<FormModel>(INITIAL_VALUES);
+    const [formData, setFormData] = useState<FormModel>();
 
     const submitHandler = (e: FormEvent) => {
         e.preventDefault(); // avoid page reloading

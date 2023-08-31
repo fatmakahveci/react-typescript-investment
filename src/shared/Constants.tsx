@@ -1,3 +1,5 @@
+import { FormModel } from "@/shared/types/Types";
+
 export const INITIAL_VALUES: FormModel = {
     "current-savings": 0,
     "yearly-contribution": 0,
