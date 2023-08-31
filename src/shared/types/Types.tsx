@@ -4,3 +4,10 @@ export type FormModel = {
     "expected-return": number,
     "duration": number
 };
+
+export type YearlyData = {
+    year: number,
+    yearlyInterest: number,
+    savingsEndOfYear: number,
+    yearlyContribution: number
+};
