@@ -18,9 +18,9 @@ const Home = ({ }): JSX.Element => {
 
   if (formData) {
     let currentSavings: number = +formData["current-savings"];
-    const yearlyContribution: number = +formData["yearly-contribution"];
-    const expectedReturn: number = +formData["expected-return"] / 100;
-    const duration: number = +formData["duration"];
+    let yearlyContribution: number = +formData["yearly-contribution"];
+    let expectedReturn: number = +formData["expected-return"] / 100;
+    let duration: number = +formData["duration"];
 
     // It calculates yearly results (total savings, interest etc)
     for (let i: number = 0; i < duration; i++) {
@@ -44,7 +44,7 @@ const Home = ({ }): JSX.Element => {
       <Header />
       <Form onCalculate={calculateHandler} />
       {!formData && <p>No investment calculated yet!</p>}
-      {formData && <Table data={yearlyData} />}
+      {formData && <Table data={yearlyData} initialInvestment={formData["current-savings"]} />}
     </>
   );
 };
