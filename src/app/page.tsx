@@ -43,7 +43,7 @@ const Home = ({ }): JSX.Element => {
     <>
       <Header />
       <Form onCalculate={calculateHandler} />
-      {!formData && <p>No investment calculated yet!</p>}
+      {!formData && <p className="paragraph">No investment calculated yet!</p>}
       {formData && <Table data={yearlyData} initialInvestment={formData["current-savings"]} />}
     </>
   );
