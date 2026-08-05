@@ -1,0 +1,72 @@
+.summary {
+    width: min(100% - 2rem, 56rem);
+    margin: 2rem auto 0;
+}
+
+.summary__heading p,
+.summary__heading h2 {
+    margin: 0;
+}
+
+.summary__heading p {
+    color: var(--accent);
+    font-size: 0.74rem;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.summary__heading h2 {
+    margin-top: 0.2rem;
+    font-size: 1.35rem;
+    letter-spacing: -0.025em;
+}
+
+.summary__cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0 0;
+}
+
+.summary__cards div {
+    min-width: 0;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: rgb(14 28 46 / 78%);
+}
+
+.summary__cards dt {
+    color: var(--text-muted);
+    font-size: 0.72rem;
+}
+
+.summary__cards dd {
+    margin: 0.3rem 0 0;
+    overflow-wrap: anywhere;
+    color: var(--text);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+}
+
+.summary__cards .summary__positive {
+    color: var(--accent);
+}
+
+.summary__cards .summary__negative {
+    color: var(--danger);
+}
+
+@media (max-width: 46rem) {
+    .summary__cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 26rem) {
+    .summary__cards {
+        grid-template-columns: 1fr;
+    }
+}

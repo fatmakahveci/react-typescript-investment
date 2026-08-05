@@ -1,150 +1,155 @@
 'use client';
 
-import { InvestmentInput } from '@/shared/types';
 import { FormErrors, validateInvestment } from '@/shared/investment';
-import { FC, FormEvent, useState } from 'react';
+import { Language, translations } from '@/shared/i18n';
+import { Currency, Frequency, InvestmentInput } from '@/shared/types';
+import { FormEvent, useState } from 'react';
 import './Form.css';
 
 interface Props {
     onCalculate: (formData: InvestmentInput) => void;
     onReset: () => void;
+    language: Language;
+    initialValues?: InvestmentInput | null;
 }
 
 type FormValues = Record<keyof InvestmentInput, string>;
 
 const INITIAL_FORM_VALUES: FormValues = {
     currentSavings: '',
-    yearlyContribution: '',
+    contribution: '',
+    contributionFrequency: 'monthly',
     expectedReturn: '',
+    compoundingFrequency: 'monthly',
+    inflationRate: '2.5',
     duration: '',
+    currency: 'USD',
 };
 
 const parseNumber = (value: string): number => value.trim() === '' ? Number.NaN : Number(value);
 
 const toInvestmentInput = (values: FormValues): InvestmentInput => ({
     currentSavings: parseNumber(values.currentSavings),
-    yearlyContribution: parseNumber(values.yearlyContribution),
+    contribution: parseNumber(values.contribution),
+    contributionFrequency: values.contributionFrequency as Frequency,
     expectedReturn: parseNumber(values.expectedReturn),
+    compoundingFrequency: values.compoundingFrequency as Frequency,
+    inflationRate: parseNumber(values.inflationRate),
     duration: parseNumber(values.duration),
+    currency: values.currency as Currency,
 });
 
-const Form: FC<Props> = ({ onCalculate, onReset }) => {
-    // Strings allow number inputs to remain genuinely empty while the user edits them.
-    const [formData, setFormData] = useState<FormValues>(INITIAL_FORM_VALUES);
-    const [errors, setErrors] = useState<FormErrors>({});
+const toFormValues = (values: InvestmentInput): FormValues => Object.fromEntries(
+    Object.entries(values).map(([key, value]) => [key, String(value)]),
+) as FormValues;
 
-    const submitHandler = (e: FormEvent) => {
-        // Keep submission client-side and only publish values after domain validation.
-        e.preventDefault();
+const Form = ({ onCalculate, onReset, language, initialValues }: Props) => {
+    const [formData, setFormData] = useState<FormValues>(() => initialValues ? toFormValues(initialValues) : INITIAL_FORM_VALUES);
+    const [errors, setErrors] = useState<FormErrors>({});
+    const text = translations[language];
+
+    const submitHandler = (event: FormEvent) => {
+        event.preventDefault();
         const investmentInput = toInvestmentInput(formData);
         const validationErrors = validateInvestment(investmentInput);
         setErrors(validationErrors);
 
-        if (Object.keys(validationErrors).length > 0) return;
-
-        onCalculate(investmentInput);
+        if (Object.keys(validationErrors).length === 0) {
+            onCalculate(investmentInput);
+        }
     };
 
     const resetHandler = () => {
         setFormData(INITIAL_FORM_VALUES);
         setErrors({});
-        // The parent owns the result table, so it must be reset separately.
         onReset();
     };
 
     const handleChange = (input: keyof InvestmentInput, value: string) => {
-        // keyof prevents field names that do not exist in the investment model.
-        setFormData((prevValue) => {
-            return {
-                ...prevValue,
-                [input]: value,
-            };
-        });
+        setFormData((previous) => ({ ...previous, [input]: value }));
+    };
+
+    const currencySymbol = ({ USD: '$', EUR: '€', GBP: '£', TRY: '₺' } as const)[formData.currency as Currency];
+    const localizedContributionLabel = formData.contributionFrequency === 'monthly' ? text.monthlyContribution : text.yearlyContribution;
+    const errorText = {
+        currentSavings: text.invalidCurrentSavings,
+        contribution: text.invalidContribution,
+        expectedReturn: text.invalidReturn,
+        inflationRate: text.invalidInflation,
+        duration: text.invalidDuration,
     };
 
     return (
         <form onSubmit={submitHandler} onReset={resetHandler} className="form">
+            <div className="form__intro">
+                <h2>{text.formTitle}</h2>
+                <p>{text.formDescription}</p>
+            </div>
+
             <div className="input-group">
                 <p>
-                    <label htmlFor="current-savings">Current Savings ($)</label>
-                    <input
-                        type="number"
-                        name="current-savings"
-                        id="current-savings"
-                        placeholder="Enter the value..."
-                        value={formData.currentSavings}
-                        onChange={(e) => handleChange('currentSavings', e.target.value)}
-                        min="0"
-                        step="0.01"
-                        required
-                        aria-invalid={Boolean(errors.currentSavings)}
-                        aria-describedby={errors.currentSavings ? 'current-savings-error' : undefined}
-                    />
-                    {errors.currentSavings && <span id="current-savings-error" className="error" role="alert">{errors.currentSavings}</span>}
+                    <label htmlFor="currency">{text.currency}</label>
+                    <select id="currency" value={formData.currency} onChange={(event) => handleChange('currency', event.target.value)}>
+                        <option value="USD">USD — US Dollar</option>
+                        <option value="EUR">EUR — Euro</option>
+                        <option value="GBP">GBP — British Pound</option>
+                        <option value="TRY">TRY — Turkish Lira</option>
+                    </select>
                 </p>
                 <p>
-                    <label htmlFor="yearly-contribution">Yearly Savings ($)</label>
-                    <input
-                        type="number"
-                        name="yearly-contribution"
-                        id="yearly-contribution"
-                        placeholder="Enter the value..."
-                        value={formData.yearlyContribution}
-                        onChange={(e) => handleChange('yearlyContribution', e.target.value)}
-                        min="0"
-                        step="0.01"
-                        required
-                        aria-invalid={Boolean(errors.yearlyContribution)}
-                        aria-describedby={errors.yearlyContribution ? 'yearly-contribution-error' : undefined}
-                    />
-                    {errors.yearlyContribution && <span id="yearly-contribution-error" className="error" role="alert">{errors.yearlyContribution}</span>}
+                    <label htmlFor="current-savings">{text.currentSavings} ({currencySymbol})</label>
+                    <input id="current-savings" type="number" value={formData.currentSavings} onChange={(event) => handleChange('currentSavings', event.target.value)} placeholder="e.g. 10,000" min="0" step="0.01" required aria-invalid={Boolean(errors.currentSavings)} aria-describedby={errors.currentSavings ? 'current-savings-error' : undefined} />
+                    {errors.currentSavings && <span id="current-savings-error" className="error" role="alert">{errorText.currentSavings}</span>}
                 </p>
             </div>
+
             <div className="input-group">
                 <p>
-                    <label htmlFor="expected-return">Expected Interest (%, per year)</label>
-                    <input
-                        type="number"
-                        name="expected-return"
-                        id="expected-return"
-                        placeholder="Enter the value..."
-                        value={formData.expectedReturn}
-                        onChange={(e) => handleChange('expectedReturn', e.target.value)}
-                        min="-100"
-                        max="100"
-                        step="0.01"
-                        required
-                        aria-invalid={Boolean(errors.expectedReturn)}
-                        aria-describedby={errors.expectedReturn ? 'expected-return-error' : undefined}
-                    />
-                    {errors.expectedReturn && <span id="expected-return-error" className="error" role="alert">{errors.expectedReturn}</span>}
+                    <label htmlFor="contribution-frequency">{text.contributionFrequency}</label>
+                    <select id="contribution-frequency" value={formData.contributionFrequency} onChange={(event) => handleChange('contributionFrequency', event.target.value)}>
+                        <option value="monthly">{text.monthly}</option>
+                        <option value="yearly">{text.yearly}</option>
+                    </select>
                 </p>
                 <p>
-                    <label htmlFor="duration">Investment Duration (years)</label>
-                    <input
-                        type="number"
-                        name="duration"
-                        id="duration"
-                        placeholder="Enter the value..."
-                        value={formData.duration}
-                        onChange={(e) => handleChange('duration', e.target.value)}
-                        min="1"
-                        max="100"
-                        step="1"
-                        required
-                        aria-invalid={Boolean(errors.duration)}
-                        aria-describedby={errors.duration ? 'duration-error' : undefined}
-                    />
-                    {errors.duration && <span id="duration-error" className="error" role="alert">{errors.duration}</span>}
+                    <label htmlFor="contribution">{localizedContributionLabel} ({currencySymbol})</label>
+                    <input id="contribution" type="number" value={formData.contribution} onChange={(event) => handleChange('contribution', event.target.value)} placeholder={formData.contributionFrequency === 'monthly' ? 'e.g. 200' : 'e.g. 2,400'} min="0" step="0.01" required aria-invalid={Boolean(errors.contribution)} aria-describedby={errors.contribution ? 'contribution-error' : undefined} />
+                    {errors.contribution && <span id="contribution-error" className="error" role="alert">{errorText.contribution}</span>}
                 </p>
             </div>
+
+            <div className="input-group">
+                <p>
+                    <label htmlFor="expected-return">{text.expectedReturn}</label>
+                    <input id="expected-return" type="number" value={formData.expectedReturn} onChange={(event) => handleChange('expectedReturn', event.target.value)} placeholder="e.g. 7" min="-100" max="100" step="0.01" required aria-invalid={Boolean(errors.expectedReturn)} aria-describedby={errors.expectedReturn ? 'expected-return-error' : undefined} />
+                    {errors.expectedReturn && <span id="expected-return-error" className="error" role="alert">{errorText.expectedReturn}</span>}
+                </p>
+                <p>
+                    <label htmlFor="compounding-frequency">{text.compoundingFrequency}</label>
+                    <select id="compounding-frequency" value={formData.compoundingFrequency} onChange={(event) => handleChange('compoundingFrequency', event.target.value)}>
+                        <option value="monthly">{text.monthly}</option>
+                        <option value="yearly">{text.yearly}</option>
+                    </select>
+                </p>
+            </div>
+
+            <div className="input-group">
+                <p>
+                    <label htmlFor="inflation-rate">{text.inflation}</label>
+                    <input id="inflation-rate" type="number" value={formData.inflationRate} onChange={(event) => handleChange('inflationRate', event.target.value)} min="0" max="100" step="0.01" required aria-invalid={Boolean(errors.inflationRate)} aria-describedby={errors.inflationRate ? 'inflation-rate-error' : 'inflation-rate-help'} />
+                    <span id="inflation-rate-help" className="field-help">{text.inflationHelp}</span>
+                    {errors.inflationRate && <span id="inflation-rate-error" className="error" role="alert">{errorText.inflationRate}</span>}
+                </p>
+                <p>
+                    <label htmlFor="duration">{text.duration}</label>
+                    <input id="duration" type="number" value={formData.duration} onChange={(event) => handleChange('duration', event.target.value)} placeholder="e.g. 10" min="1" max="100" step="1" required aria-invalid={Boolean(errors.duration)} aria-describedby={errors.duration ? 'duration-error' : undefined} />
+                    {errors.duration && <span id="duration-error" className="error" role="alert">{errorText.duration}</span>}
+                </p>
+            </div>
+
             <p className="actions">
-                <button type="reset" className="buttonAlt">
-                    Reset
-                </button>
-                <button type="submit" className="button">
-                    Calculate
-                </button>
+                <button type="reset" className="buttonAlt">{text.reset}</button>
+                <button type="submit" className="button">{text.calculate}</button>
             </p>
         </form>
     );

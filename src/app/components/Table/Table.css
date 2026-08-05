@@ -1,55 +1,99 @@
 .result-wrapper {
-    width: min(100% - 2rem, 50rem);
+    width: min(100% - 2rem, 56rem);
     margin: 2rem auto;
     overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--border);
+    border-radius: 0.9rem;
+    background: rgb(14 28 46 / 78%);
+    box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%);
 }
 
 .result-wrapper:focus-visible {
-    outline: 2px solid #83e6c0;
+    outline: 2px solid var(--accent);
     outline-offset: 0.25rem;
 }
 
 .result {
     width: 100%;
-    min-width: 42rem;
-    margin: 0;
-    table-layout: fixed;
+    min-width: 58rem;
     border-collapse: collapse;
     text-align: right;
 }
 
 .result caption {
-    margin-bottom: 0.75rem;
-    color: #e1eeeb;
-    font-weight: 700;
+    padding: 1.15rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 750;
     text-align: left;
 }
 
 .result thead {
-    font-size: 0.7rem;
-    color: #83e6c0;
+    color: var(--text-muted);
+    background: rgb(5 16 30 / 42%);
+    font-size: 0.69rem;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
 }
 
 .result tbody {
-    font-family: inherit;
-    font-size: 0.85rem;
-    color: #c2e9e0;
+    color: #d6e0eb;
+    font-size: 0.84rem;
+    font-variant-numeric: tabular-nums;
 }
 
 .result th,
 .result td {
-    padding: 0.8rem 0.65rem;
-    border-bottom: 1px solid rgb(131 230 192 / 18%);
+    padding: 0.85rem 0.75rem;
+    border-bottom: 1px solid var(--border);
 }
 
 .result th:first-child {
-    text-align: center;
+    padding-left: 1.25rem;
+    color: var(--accent);
+    text-align: left;
+}
+
+.result tbody th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: #102137;
+}
+
+.result th:last-child,
+.result td:last-child {
+    padding-right: 1.25rem;
+}
+
+.result tbody tr:last-child th,
+.result tbody tr:last-child td {
+    border-bottom: 0;
 }
 
 .result tbody tr:nth-child(even) {
-    background: rgb(255 255 255 / 3%);
+    background: rgb(255 255 255 / 2%);
+}
+
+.result tbody tr:nth-child(even) th:first-child {
+    background: #14263c;
 }
 
 .result tbody tr:hover {
-    background: rgb(131 230 192 / 8%);
+    background: rgb(94 225 179 / 6%);
+}
+
+@media (max-width: 36rem) {
+    .result-wrapper {
+        margin-top: 1.5rem;
+        border-radius: 0.7rem;
+    }
+
+    .result th,
+    .result td {
+        padding-block: 0.75rem;
+    }
 }

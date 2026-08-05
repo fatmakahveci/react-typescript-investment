@@ -1,15 +1,30 @@
 # Investment Calculator
 
-A small Next.js and TypeScript application that produces a year-by-year investment projection from an initial balance, annual contribution, expected annual return, and duration.
+A Next.js and TypeScript application that produces a year-by-year investment projection with configurable currency, contribution frequency, compounding frequency, and inflation adjustment.
+
+Türkçe kullanım talimatları için [Kullanıcı Rehberi](docs/KULLANICI_REHBERI.md) belgesine bakın.
+
+## Features
+
+- USD, EUR, GBP, and TRY formatting
+- Monthly or yearly contributions and compounding
+- Inflation-adjusted projections
+- Conservative, expected, and optimistic scenario comparison
+- English and Turkish interface
+- CSV export, print/PDF output, and shareable projection links
+- Accessible summary cards, growth chart, and yearly table
+
+Production, preview deployment, monitoring, and quality-gate instructions are in [Production Guide](docs/PRODUCTION.md).
 
 ## Calculation model
 
-Interest is calculated annually from the balance at the beginning of the year. The annual contribution is added at the end of that year and therefore starts earning interest in the following year.
+Returns compound at the selected monthly or yearly frequency. Contributions are added at the end of the selected contribution period. Inflation-adjusted balances show projected purchasing power in today's money.
 
 Accepted input ranges:
 
-- Current savings and annual contribution: zero or greater
+- Current savings and contribution: zero or greater
 - Expected annual return: -100% to 100%
+- Expected annual inflation: 0% to 100%
 - Duration: a whole number from 1 to 100 years
 
 ## Requirements
@@ -32,6 +47,7 @@ Open [http://localhost:3000](http://localhost:3000).
 npm test
 npm run lint
 npm run build
+npm run test:e2e
 ```
 
 Tests use Vitest, jsdom, and React Testing Library. Pull requests and pushes to `main` run all three checks in GitHub Actions.

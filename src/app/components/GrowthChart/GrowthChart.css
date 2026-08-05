@@ -1,0 +1,100 @@
+.chart {
+    width: min(100% - 2rem, 56rem);
+    margin: 1rem auto 0;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 0.9rem;
+    background: rgb(14 28 46 / 78%);
+    box-shadow: 0 1rem 3rem rgb(0 0 0 / 16%);
+}
+
+.chart figcaption {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.chart h2,
+.chart p {
+    margin: 0;
+}
+
+.chart h2 {
+    font-size: 1rem;
+}
+
+.chart p {
+    max-width: 36rem;
+    margin-top: 0.2rem;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+}
+
+.chart__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    list-style: none;
+}
+
+.chart__legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+}
+
+.chart__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+}
+
+.chart__dot--balance { background: var(--accent); }
+.chart__dot--capital { background: #7da4ff; }
+.chart__dot--real { background: #f5b971; }
+
+.chart svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    overflow: visible;
+}
+
+.chart__axis {
+    stroke: rgb(159 176 198 / 24%);
+    stroke-width: 1;
+}
+
+.chart__line {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 4;
+    vector-effect: non-scaling-stroke;
+}
+
+.chart__line--balance { stroke: var(--accent); }
+.chart__line--capital { stroke: #7da4ff; }
+.chart__line--real { stroke: #f5b971; }
+
+.chart__label {
+    fill: var(--text-muted);
+    font-size: 12px;
+}
+
+@media (max-width: 36rem) {
+    .chart figcaption {
+        flex-direction: column;
+    }
+
+    .chart__line {
+        stroke-width: 3;
+    }
+}

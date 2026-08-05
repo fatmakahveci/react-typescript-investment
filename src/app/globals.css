@@ -1,26 +1,90 @@
+:root {
+    --bg: #07111f;
+    --surface: #0e1c2e;
+    --surface-raised: #14243a;
+    --border: rgb(154 177 205 / 18%);
+    --text: #f4f7fb;
+    --text-muted: #9fb0c6;
+    --accent: #5ee1b3;
+    --accent-strong: #37c995;
+    --accent-ink: #04261d;
+    --danger: #ff9eaa;
+}
+
 * {
     box-sizing: border-box;
 }
 
-body {
-    margin: 0;
-    font-family: ui-rounded, 'SF Pro Rounded', 'Segoe UI', system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color: #242a28;
-    background: radial-gradient(#303b37, #1a1f1d);
-    color: #e1eeeb;
+html {
+    color-scheme: dark;
 }
 
-.paragraph {
-    text-align: center;
+body {
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.5;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 50% -15%, rgb(41 112 104 / 35%), transparent 42rem),
+        linear-gradient(180deg, #091728 0%, var(--bg) 70%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+    padding-bottom: 4rem;
 }
 
 .assumption {
-    max-width: 36rem;
-    margin: 0 auto;
+    display: grid;
+    gap: 0.2rem;
+    width: min(100% - 2rem, 42rem);
+    margin: 1.25rem auto 0;
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    color: var(--text-muted);
+    background: rgb(14 28 46 / 68%);
+    font-size: 0.84rem;
+}
+
+.assumption strong {
+    color: var(--accent);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    margin: 2rem auto;
     padding: 0 1rem;
-    color: #b8d7cf;
-    font-size: 0.85rem;
-    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+@media (max-width: 24rem) {
+    .empty-state {
+        align-items: flex-start;
+    }
+}
+
+.empty-state span {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--accent);
+    background: rgb(94 225 179 / 10%);
+    font-weight: 700;
+}
+
+.empty-state p {
+    margin: 0;
 }
