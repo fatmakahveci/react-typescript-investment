@@ -1,8 +1,6 @@
-const endpoint = process.env.NEXT_PUBLIC_ERROR_REPORTING_ENDPOINT;
+const endpoint = process.env.NEXT_PUBLIC_ERROR_REPORTING_ENDPOINT || '/api/errors';
 
 const sendError = (error: unknown) => {
-  if (!endpoint) return;
-
   try {
     const value = error instanceof Error ? error : new Error(String(error));
     const payload = JSON.stringify({

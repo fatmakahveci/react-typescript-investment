@@ -6,9 +6,11 @@ Import this repository into Vercel and keep the detected Next.js settings. The i
 
 No environment variable is required for the calculator itself.
 
-## Optional error monitoring
+## Error monitoring
 
-Set `NEXT_PUBLIC_ERROR_REPORTING_ENDPOINT` to an HTTPS endpoint that accepts JSON beacon requests. Uncaught browser errors and unhandled promise rejections are sent to that endpoint. If the variable is absent, monitoring remains disabled and no request is made.
+Uncaught browser errors and unhandled promise rejections are sent to the same-origin `/api/errors` endpoint by default. Reports are size-limited, sanitized, and written to the server's deployment logs without recording form values.
+
+To use an external monitoring provider later, set `NEXT_PUBLIC_ERROR_REPORTING_ENDPOINT` to an HTTPS endpoint that accepts JSON beacon requests.
 
 The endpoint should apply rate limiting, avoid storing IP addresses unnecessarily, and never place credentials in this public environment variable.
 
