@@ -1,33 +1,43 @@
-# Getting Started with Create React App
+# Investment Calculator
+
+A small Next.js and TypeScript application that produces a year-by-year investment projection from an initial balance, annual contribution, expected annual return, and duration.
+
+## Calculation model
+
+Interest is calculated annually from the balance at the beginning of the year. The annual contribution is added at the end of that year and therefore starts earning interest in the following year.
+
+Accepted input ranges:
+
+- Current savings and annual contribution: zero or greater
+- Expected annual return: -100% to 100%
+- Duration: a whole number from 1 to 100 years
+
+## Requirements
+
+- Node.js 20.9 or newer
+- npm
+
+## Local development
 
 ```bash
-npx create-react-app react-investment --template typescript
+npm install
+npm run dev
 ```
 
-In the project directory, you can run:
+Open [http://localhost:3000](http://localhost:3000).
 
-## `npm run dev`
+## Quality checks
 
-Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+npm test
+npm run lint
+npm run build
+```
 
-## `npm test`
+Tests use Vitest, jsdom, and React Testing Library. Pull requests and pushes to `main` run all three checks in GitHub Actions.
 
-Launches the test runner in the interactive watch mode.
+## Technology
 
-## `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-## `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Next.js App Router
+- React and TypeScript
+- Plain CSS

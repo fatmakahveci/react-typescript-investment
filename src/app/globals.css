@@ -1,12 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap');
-
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    font-family: 'Quicksand', sans-serif;
+    font-family: ui-rounded, 'SF Pro Rounded', 'Segoe UI', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: #242a28;
@@ -15,5 +13,14 @@ body {
 }
 
 .paragraph {
+    text-align: center;
+}
+
+.assumption {
+    max-width: 36rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+    color: #b8d7cf;
+    font-size: 0.85rem;
     text-align: center;
 }

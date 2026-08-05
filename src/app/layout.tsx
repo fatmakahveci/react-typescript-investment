@@ -1,7 +1,11 @@
-'use client';
-
+import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 import './globals.css';
+
+export const metadata: Metadata = {
+  title: 'Investment Calculator',
+  description: 'Calculate a year-by-year projection for your investment.',
+};
 
 export default function RootLayout({
   children,
@@ -10,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="{body}">{children}</body>
+      <body>{children}</body>
     </html>
   )
 }

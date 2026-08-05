@@ -1,50 +1,32 @@
 'use client';
 
-import { FormModel, YearlyData } from '@/shared/types/Types';
+import { InvestmentInput, YearlyData } from '@/shared/types';
+import { calculateInvestment, INVESTMENT_ASSUMPTION } from '@/shared/investment';
 import Form from './components/Form/Form';
 import Header from './components/Header/Header';
 import Table from './components/Table/Table';
 import { useState } from 'react';
-import './globals.css';
 
-const Home = ({ }): JSX.Element => {
-  const [formData, setFormData] = useState<FormModel | null>(null);
+const Home = () => {
+  // A null value means that no valid calculation is currently displayed.
+  const [formData, setFormData] = useState<InvestmentInput | null>(null);
 
-  const calculateHandler = (formData: FormModel): void => {
+  const calculateHandler = (formData: InvestmentInput): void => {
     setFormData(formData);
   };
 
-  let yearlyData: YearlyData[] = []; // per-year results
-
-  if (formData) {
-    let currentSavings: number = +formData["current-savings"];
-    let yearlyContribution: number = +formData["yearly-contribution"];
-    let expectedReturn: number = +formData["expected-return"] / 100;
-    let duration: number = +formData["duration"];
-
-    // It calculates yearly results (total savings, interest etc)
-    for (let i: number = 0; i < duration; i++) {
-      const yearlyInterest: number = currentSavings * expectedReturn;
-      currentSavings += yearlyInterest + yearlyContribution;
-
-      yearlyData.push({
-        // TODO: Change the shape of pushed object
-        year: i + 1,
-        yearlyInterest: yearlyInterest,
-        savingsEndOfYear: currentSavings,
-        yearlyContribution: yearlyContribution,
-      });
-    }
-
-    // TODO: do something with yearlyData ...
-  }
+  // The pure calculator keeps financial rules out of the rendering code.
+  const yearlyData: YearlyData[] = formData ? calculateInvestment(formData) : [];
 
   return (
     <>
       <Header />
-      <Form onCalculate={calculateHandler} />
-      {!formData && <p className="paragraph">No investment calculated yet!</p>}
-      {formData && <Table data={yearlyData} initialInvestment={formData["current-savings"]} />}
+      <main>
+        <Form onCalculate={calculateHandler} onReset={() => setFormData(null)} />
+        <p className="assumption">{INVESTMENT_ASSUMPTION}</p>
+        {!formData && <p className="paragraph" role="status">Enter your investment details to see a projection.</p>}
+        {formData && <Table data={yearlyData} />}
+      </main>
     </>
   );
 };

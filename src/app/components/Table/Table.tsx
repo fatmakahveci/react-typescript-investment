@@ -1,13 +1,10 @@
-'use client';
-
 import './Table.css';
-import { YearlyData } from '@/shared/types/Types';
+import { YearlyData } from '@/shared/types';
 import { FC } from 'react';
 
 interface Props {
     data: YearlyData[];
-    initialInvestment: number;
-};
+}
 
 const formatter: Intl.NumberFormat = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -16,31 +13,34 @@ const formatter: Intl.NumberFormat = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
 });
 
-const Table: FC<Props> = ({ data, initialInvestment }): JSX.Element => {
+const Table: FC<Props> = ({ data }) => {
     return (
+        <div className="result-wrapper" tabIndex={0} aria-label="Investment results, horizontally scrollable on small screens">
         <table className="result">
+            <caption>Year-by-year investment projection</caption>
             <thead>
                 <tr>
-                    <th>Year</th>
-                    <th>Total Savings</th>
-                    <th>Interest (Year)</th>
-                    <th>Total Interest</th>
-                    <th>Invested Capital</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Total Savings</th>
+                    <th scope="col">Interest (Year)</th>
+                    <th scope="col">Total Interest</th>
+                    <th scope="col">Invested Capital</th>
                 </tr>
             </thead>
             <tbody>
                 {data.map((yearData) => (
                     <tr key={yearData.year}>
-                        <td>{yearData.year}</td>
+                        <th scope="row">{yearData.year}</th>
                         <td>{formatter.format(yearData.savingsEndOfYear)}</td>
                         <td>{formatter.format(yearData.yearlyInterest)}</td>
-                        <td>{formatter.format(yearData.savingsEndOfYear - initialInvestment - yearData.yearlyContribution * yearData.year)}</td>
-                        <td>{formatter.format(initialInvestment + yearData.yearlyContribution * yearData.year)}</td>
+                        <td>{formatter.format(yearData.totalInterest)}</td>
+                        <td>{formatter.format(yearData.investedCapital)}</td>
                     </tr>
                 ))}
             </tbody>
         </table>
-    )
-}
+        </div>
+    );
+};
 
 export default Table;
