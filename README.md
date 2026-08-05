@@ -52,6 +52,17 @@ npm run test:e2e
 
 Tests use Vitest, jsdom, and React Testing Library. Pull requests and pushes to `main` run all three checks in GitHub Actions.
 
+## Container package
+
+Every push to `main` publishes a production image to GitHub Container Registry. Run the latest image with:
+
+```bash
+docker pull ghcr.io/fatmakahveci/react-typescript-investment:latest
+docker run --rm -p 3000:3000 ghcr.io/fatmakahveci/react-typescript-investment:latest
+```
+
+Then open [http://localhost:3000](http://localhost:3000). Version tags such as `v1.0.0` also publish a matching image tag.
+
 ## Technology
 
 - Next.js App Router
