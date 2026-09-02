@@ -73,3 +73,10 @@ Then open [http://localhost:3000](http://localhost:3000). Version tags such as `
 - Next.js App Router
 - React and TypeScript
 - Plain CSS
+
+## Project Resources
+
+- [Changelog](CHANGELOG.md)
+- [Contributing guide](.github/CONTRIBUTING.md)
+- [Security policy](.github/SECURITY.md)
+- [License](LICENSE.md)
