@@ -5,10 +5,9 @@ import './Header.css';
 
 interface Props {
     language: Language;
-    onLanguageChange: (language: Language) => void;
 }
 
-const Header = ({ language, onLanguageChange }: Props) => {
+const Header = ({ language }: Props) => {
     const text = translations[language];
 
     return (
@@ -18,10 +17,6 @@ const Header = ({ language, onLanguageChange }: Props) => {
                 <p className="header__eyebrow">{text.eyebrow}</p>
                 <h1>{text.title}</h1>
                 <p className="header__description">{text.subtitle}</p>
-            </div>
-            <div className="language-switch" role="group" aria-label="Language / Dil">
-                <button type="button" aria-pressed={language === 'en'} onClick={() => onLanguageChange('en')}>EN</button>
-                <button type="button" aria-pressed={language === 'tr'} onClick={() => onLanguageChange('tr')}>TR</button>
             </div>
         </header>
     );

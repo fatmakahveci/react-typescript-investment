@@ -7,7 +7,7 @@
 
 A Next.js and TypeScript application that produces a year-by-year investment projection with configurable currency, contribution frequency, compounding frequency, and inflation adjustment.
 
-Türkçe kullanım talimatları için [Kullanıcı Rehberi](docs/KULLANICI_REHBERI.md) belgesine bakın.
+For detailed usage instructions, see the [User Guide](docs/USER_GUIDE.md).
 
 ## Features
 
@@ -15,7 +15,7 @@ Türkçe kullanım talimatları için [Kullanıcı Rehberi](docs/KULLANICI_REHBE
 - Monthly or yearly contributions and compounding
 - Inflation-adjusted projections
 - Conservative, expected, and optimistic scenario comparison
-- English and Turkish interface
+- English interface
 - CSV export, print/PDF output, and shareable projection links
 - Accessible summary cards, growth chart, and yearly table
 
