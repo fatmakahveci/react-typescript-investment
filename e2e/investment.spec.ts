@@ -15,19 +15,19 @@ test('calculates and displays a responsive investment projection', async ({ page
   await expect(page.locator('body')).not.toHaveCSS('overflow-x', 'auto');
 });
 
-test('switches the complete form to Turkish', async ({ page }) => {
+test('renders the complete interface in English', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'TR' }).click();
 
-  await expect(page.getByRole('heading', { name: 'Yatırım Hesaplayıcı' })).toBeVisible();
-  await expect(page.getByRole('button', { name: /projeksiyonu hesapla/i })).toBeVisible();
-  await expect(page.getByLabel(/mevcut birikim/i)).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Investment Calculator' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /calculate projection/i })).toBeVisible();
+  await expect(page.getByLabel(/current savings/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: 'TR' })).toHaveCount(0);
 });
 
 test('restores a shared projection from the URL', async ({ page }) => {
-  await page.goto('/?currentSavings=5000&contribution=150&contributionFrequency=monthly&expectedReturn=6&compoundingFrequency=monthly&inflationRate=2&duration=5&currency=EUR&lang=tr');
+  await page.goto('/?currentSavings=5000&contribution=150&contributionFrequency=monthly&expectedReturn=6&compoundingFrequency=monthly&inflationRate=2&duration=5&currency=EUR&lang=en');
 
-  await expect(page.getByRole('heading', { name: /yatırım özetiniz/i })).toBeVisible();
-  await expect(page.getByLabel(/mevcut birikim/i)).toHaveValue('5000');
+  await expect(page.getByRole('heading', { name: /investment snapshot/i })).toBeVisible();
+  await expect(page.getByLabel(/current savings/i)).toHaveValue('5000');
   await expect(page.getByText(/€/).first()).toBeVisible();
 });
