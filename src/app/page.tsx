@@ -32,15 +32,13 @@ const parseSharedInput = (): InvestmentInput | null => {
 
 const Home = () => {
   const [formData, setFormData] = useState<InvestmentInput | null>(null);
-  const [language, setLanguage] = useState<Language>('en');
+  const language: Language = 'en';
   const text = translations[language];
 
   useEffect(() => {
     const sharedInput = parseSharedInput();
-    const sharedLanguage = new URLSearchParams(window.location.search).get('lang');
     queueMicrotask(() => {
       if (sharedInput) setFormData(sharedInput);
-      if (sharedLanguage === 'tr' || sharedLanguage === 'en') setLanguage(sharedLanguage);
     });
   }, []);
 
@@ -52,7 +50,7 @@ const Home = () => {
 
   return (
     <>
-      <Header language={language} onLanguageChange={setLanguage} />
+      <Header language={language} />
       <main>
         <Form key={formData ? JSON.stringify(formData) : 'empty'} language={language} initialValues={formData} onCalculate={setFormData} onReset={() => setFormData(null)} />
         <aside className="assumption" aria-label={text.methodTitle}>
