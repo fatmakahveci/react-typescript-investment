@@ -1,8 +1,13 @@
 # Investment Calculator
 
+[![CI](https://github.com/fatmakahveci/react-typescript-investment/actions/workflows/ci.yml/badge.svg)](https://github.com/fatmakahveci/react-typescript-investment/actions/workflows/ci.yml)
+[![Next.js](https://img.shields.io/badge/Next.js-React-000000?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE.md)
+
 A Next.js and TypeScript application that produces a year-by-year investment projection with configurable currency, contribution frequency, compounding frequency, and inflation adjustment.
 
-See the [User Guide](docs/USER_GUIDE.md) for usage instructions.
+For detailed usage instructions, see the [User Guide](docs/USER_GUIDE.md).
 
 ## Features
 
@@ -68,3 +73,10 @@ Then open [http://localhost:3000](http://localhost:3000). Version tags such as `
 - Next.js App Router
 - React and TypeScript
 - Plain CSS
+
+## Project Resources
+
+- [Changelog](CHANGELOG.md)
+- [Contributing guide](.github/CONTRIBUTING.md)
+- [Security policy](.github/SECURITY.md)
+- [License](LICENSE.md)
