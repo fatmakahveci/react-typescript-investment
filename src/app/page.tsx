@@ -1,7 +1,7 @@
 'use client';
 
 import { calculateInvestment, validateInvestment } from '@/shared/investment';
-import { Language, translations } from '@/shared/i18n';
+import { text } from '@/shared/copy';
 import { Currency, Frequency, InvestmentInput, YearlyData } from '@/shared/types';
 import { useEffect, useState } from 'react';
 import Form from './components/Form/Form';
@@ -32,8 +32,6 @@ const parseSharedInput = (): InvestmentInput | null => {
 
 const Home = () => {
   const [formData, setFormData] = useState<InvestmentInput | null>(null);
-  const language: Language = 'en';
-  const text = translations[language];
 
   useEffect(() => {
     const sharedInput = parseSharedInput();
@@ -42,17 +40,13 @@ const Home = () => {
     });
   }, []);
 
-  useEffect(() => {
-    document.documentElement.lang = language;
-  }, [language]);
-
   const yearlyData: YearlyData[] = formData ? calculateInvestment(formData) : [];
 
   return (
     <>
-      <Header language={language} />
+      <Header />
       <main>
-        <Form key={formData ? JSON.stringify(formData) : 'empty'} language={language} initialValues={formData} onCalculate={setFormData} onReset={() => setFormData(null)} />
+        <Form key={formData ? JSON.stringify(formData) : 'empty'} initialValues={formData} onCalculate={setFormData} onReset={() => setFormData(null)} />
         <aside className="assumption" aria-label={text.methodTitle}>
           <strong>{text.methodTitle}</strong>
           <span>{text.method}</span>
@@ -65,11 +59,11 @@ const Home = () => {
         )}
         {formData && (
           <>
-            <ResultActions input={formData} data={yearlyData} language={language} />
-            <ResultsSummary data={yearlyData} currency={formData.currency} language={language} />
-            <ScenarioComparison input={formData} language={language} />
-            <GrowthChart data={yearlyData} currency={formData.currency} language={language} />
-            <Table data={yearlyData} currency={formData.currency} language={language} />
+            <ResultActions input={formData} data={yearlyData} />
+            <ResultsSummary data={yearlyData} currency={formData.currency} />
+            <ScenarioComparison input={formData} />
+            <GrowthChart data={yearlyData} currency={formData.currency} />
+            <Table data={yearlyData} currency={formData.currency} />
           </>
         )}
       </main>

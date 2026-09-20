@@ -5,7 +5,7 @@ import Form from './Form';
 describe('Form', () => {
   it('shows validation errors and does not calculate invalid values', () => {
     const onCalculate = vi.fn();
-    render(<Form language="en" onCalculate={onCalculate} onReset={vi.fn()} />);
+    render(<Form onCalculate={onCalculate} onReset={vi.fn()} />);
 
     fireEvent.submit(screen.getByRole('button', { name: /calculate/i }).closest('form')!);
 
@@ -15,7 +15,7 @@ describe('Form', () => {
 
   it('keeps a cleared number input empty and rejects it on submit', () => {
     const onCalculate = vi.fn();
-    render(<Form language="en" onCalculate={onCalculate} onReset={vi.fn()} />);
+    render(<Form onCalculate={onCalculate} onReset={vi.fn()} />);
 
     const savingsInput = screen.getByLabelText(/current savings/i);
     fireEvent.change(savingsInput, { target: { value: '' } });
@@ -28,7 +28,7 @@ describe('Form', () => {
 
   it('converts valid form values to numbers before calculating', () => {
     const onCalculate = vi.fn();
-    render(<Form language="en" onCalculate={onCalculate} onReset={vi.fn()} />);
+    render(<Form onCalculate={onCalculate} onReset={vi.fn()} />);
 
     fireEvent.change(screen.getByLabelText(/current savings/i), { target: { value: '1000' } });
     fireEvent.change(screen.getByLabelText(/monthly contribution/i), { target: { value: '100' } });
@@ -49,7 +49,7 @@ describe('Form', () => {
   });
 
   it('updates the currency and contribution label', () => {
-    render(<Form language="en" onCalculate={vi.fn()} onReset={vi.fn()} />);
+    render(<Form onCalculate={vi.fn()} onReset={vi.fn()} />);
 
     fireEvent.change(screen.getByLabelText(/currency/i), { target: { value: 'TRY' } });
     fireEvent.change(screen.getByLabelText(/contribution frequency/i), { target: { value: 'yearly' } });
@@ -60,7 +60,7 @@ describe('Form', () => {
 
   it('notifies the parent when reset is clicked', () => {
     const onReset = vi.fn();
-    render(<Form language="en" onCalculate={vi.fn()} onReset={onReset} />);
+    render(<Form onCalculate={vi.fn()} onReset={onReset} />);
 
     fireEvent.click(screen.getByRole('button', { name: /reset/i }));
 
