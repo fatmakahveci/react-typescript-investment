@@ -4,7 +4,7 @@ import ResultsSummary from './ResultsSummary';
 
 describe('ResultsSummary', () => {
   it('formats the final values in the selected currency', () => {
-    render(<ResultsSummary language="en" currency="EUR" data={[{
+    render(<ResultsSummary currency="EUR" data={[{
       year: 1,
       yearlyInterest: 50,
       savingsEndOfYear: 1250,

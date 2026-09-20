@@ -4,7 +4,7 @@ import GrowthChart from './GrowthChart';
 
 describe('GrowthChart', () => {
   it('provides a textual summary alongside the visual chart', () => {
-    render(<GrowthChart language="en" currency="GBP" data={[{
+    render(<GrowthChart currency="GBP" data={[{
       year: 1,
       yearlyInterest: 50,
       savingsEndOfYear: 1250,

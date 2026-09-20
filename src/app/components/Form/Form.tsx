@@ -1,7 +1,7 @@
 'use client';
 
 import { FormErrors, validateInvestment } from '@/shared/investment';
-import { Language, translations } from '@/shared/i18n';
+import { text } from '@/shared/copy';
 import { Currency, Frequency, InvestmentInput } from '@/shared/types';
 import { FormEvent, useState } from 'react';
 import './Form.css';
@@ -9,7 +9,6 @@ import './Form.css';
 interface Props {
     onCalculate: (formData: InvestmentInput) => void;
     onReset: () => void;
-    language: Language;
     initialValues?: InvestmentInput | null;
 }
 
@@ -43,10 +42,9 @@ const toFormValues = (values: InvestmentInput): FormValues => Object.fromEntries
     Object.entries(values).map(([key, value]) => [key, String(value)]),
 ) as FormValues;
 
-const Form = ({ onCalculate, onReset, language, initialValues }: Props) => {
+const Form = ({ onCalculate, onReset, initialValues }: Props) => {
     const [formData, setFormData] = useState<FormValues>(() => initialValues ? toFormValues(initialValues) : INITIAL_FORM_VALUES);
     const [errors, setErrors] = useState<FormErrors>({});
-    const text = translations[language];
 
     const submitHandler = (event: FormEvent) => {
         event.preventDefault();

@@ -32,8 +32,7 @@
 @media print {
     .result-actions,
     .form,
-    .assumption,
-    .language-switch { display: none !important; }
+    .assumption { display: none !important; }
 
     body { color: #111; background: #fff; }
     .summary__cards div,
