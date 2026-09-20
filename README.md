@@ -9,6 +9,10 @@ A Next.js and TypeScript application that produces a year-by-year investment pro
 
 For detailed usage instructions, see the [User Guide](docs/USER_GUIDE.md).
 
+## Demo
+
+![Investment Calculator demo showing form inputs, projection results, and the growth chart](demo.gif)
+
 ## Features
 
 - USD, EUR, GBP, and TRY formatting
