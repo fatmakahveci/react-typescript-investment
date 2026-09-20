@@ -1,19 +1,18 @@
 import { formatCurrency } from '@/shared/currency';
 import { Currency, YearlyData } from '@/shared/types';
-import { Language, translations } from '@/shared/i18n';
+import { text } from '@/shared/copy';
 import './GrowthChart.css';
 
 interface Props {
   data: YearlyData[];
   currency: Currency;
-  language: Language;
 }
 
 const WIDTH = 800;
 const HEIGHT = 280;
 const PADDING = 28;
 
-const GrowthChart = ({ data, currency, language }: Props) => {
+const GrowthChart = ({ data, currency }: Props) => {
   if (data.length === 0) return null;
 
   const maximum = Math.max(...data.flatMap((year) => [year.savingsEndOfYear, year.investedCapital, year.inflationAdjustedSavings]), 1);
@@ -21,7 +20,6 @@ const GrowthChart = ({ data, currency, language }: Props) => {
   const y = (value: number) => HEIGHT - PADDING - (value / maximum) * (HEIGHT - PADDING * 2);
   const points = (selector: (year: YearlyData) => number) => data.map((year, index) => `${x(index)},${y(selector(year))}`).join(' ');
   const finalYear = data.at(-1)!;
-  const text = translations[language];
 
   return (
     <figure className="chart" aria-labelledby="growth-chart-title growth-chart-description">

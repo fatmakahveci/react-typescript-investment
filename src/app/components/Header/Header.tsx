@@ -1,15 +1,9 @@
 import Image from 'next/image';
 import logo from '../../../assets/investment-calculator-logo.png';
-import { Language, translations } from '@/shared/i18n';
+import { text } from '@/shared/copy';
 import './Header.css';
 
-interface Props {
-    language: Language;
-}
-
-const Header = ({ language }: Props) => {
-    const text = translations[language];
-
+const Header = () => {
     return (
         <header className="header">
             <Image src={logo} alt="Investment calculator logo" priority />

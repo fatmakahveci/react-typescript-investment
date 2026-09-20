@@ -1,7 +1,7 @@
 'use client';
 
 import { formatCurrency } from '@/shared/currency';
-import { Language, translations } from '@/shared/i18n';
+import { text } from '@/shared/copy';
 import { InvestmentInput, YearlyData } from '@/shared/types';
 import { useState } from 'react';
 import './ResultActions.css';
@@ -9,12 +9,10 @@ import './ResultActions.css';
 interface Props {
   input: InvestmentInput;
   data: YearlyData[];
-  language: Language;
 }
 
-const ResultActions = ({ input, data, language }: Props) => {
+const ResultActions = ({ input, data }: Props) => {
   const [copied, setCopied] = useState(false);
-  const text = translations[language];
 
   const downloadCsv = () => {
     const headers = [text.year, text.totalSavings, text.interestYear, text.totalInterest, text.investedCapital, text.chartReal];
@@ -31,7 +29,7 @@ const ResultActions = ({ input, data, language }: Props) => {
   const copyShareLink = async () => {
     const url = new URL(window.location.href);
     Object.entries(input).forEach(([key, value]) => url.searchParams.set(key, String(value)));
-    url.searchParams.set('lang', language);
+    url.searchParams.delete('lang');
     try {
       await navigator.clipboard.writeText(url.toString());
       setCopied(true);

@@ -1,17 +1,15 @@
 import { formatCurrency } from '@/shared/currency';
 import { Currency, YearlyData } from '@/shared/types';
-import { Language, translations } from '@/shared/i18n';
+import { text } from '@/shared/copy';
 import './ResultsSummary.css';
 
 interface Props {
   data: YearlyData[];
   currency: Currency;
-  language: Language;
 }
 
-const ResultsSummary = ({ data, currency, language }: Props) => {
+const ResultsSummary = ({ data, currency }: Props) => {
   const finalYear = data.at(-1);
-  const text = translations[language];
 
   if (!finalYear) return null;
 

@@ -1,104 +1,93 @@
 # Investment Calculator User Guide
 
-The calculator shows how savings may change over time based on an initial
-balance, recurring contributions, an estimated return, and inflation.
+The calculator shows how your savings could change over time, year by year. Enter your starting savings, regular contribution, expected annual return, and investment duration.
 
-> This tool provides an estimate only. Results are not guaranteed returns or
-> financial advice. Taxes, fees, market volatility, and other real-world costs
-> are not included.
+> This tool provides an estimated projection, not guaranteed returns or financial advice. It excludes taxes, fees, and market fluctuations. Inflation-adjusted results estimate purchasing power using the inflation rate you enter.
 
-## Quick Start
+## Quick start
 
-1. Select the currency used to format the results.
-2. Enter the amount currently saved.
+1. Select your **Currency**.
+2. Enter your starting balance in **Current savings**.
 3. Choose monthly or yearly contributions and enter the contribution amount.
-4. Enter the estimated annual return and compounding frequency.
-5. Enter the estimated annual inflation rate and investment duration.
-6. Select **Calculate projection**.
+4. Enter the expected annual return and choose monthly or yearly compounding.
+5. Enter expected annual inflation and the investment duration.
+6. Click **Calculate projection**.
 
-Change any value and calculate again to compare plans. Select **Reset** to
-clear both the form and the current projection.
+Change the values and calculate again to update the projection. Click **Reset** to clear the form and results.
 
-## Input Reference
+## Input fields
 
-| Field | Purpose | Accepted value |
+| Field | Description | Accepted values |
 | --- | --- | --- |
-| Currency | Formats monetary results | USD, EUR, GBP, or TRY |
-| Current Savings | Starting balance | Zero or greater |
-| Contribution Frequency | Controls when contributions are added | Monthly or yearly |
-| Contribution | Amount added at the end of each selected period | Zero or greater |
-| Expected Return | Estimated nominal annual gain or loss | -100% to 100% |
-| Compounding Frequency | Controls how often returns compound | Monthly or yearly |
-| Expected Inflation | Adjusts the purchasing-power estimate | 0% to 100% |
-| Investment Duration | Number of projected years | Whole number from 1 to 100 |
+| Currency | Currency used to display results | USD, EUR, GBP, or TRY |
+| Current savings | Starting investment balance | Zero or greater |
+| Contribution frequency | How often you add money | Monthly or Yearly |
+| Contribution | Amount added at the end of each contribution period | Zero or greater |
+| Expected return (%, yearly) | Estimated annual nominal return or loss | -100 to 100 |
+| Compounding frequency | How often returns compound | Monthly or Yearly |
+| Expected inflation (%, yearly) | Annual rate used to estimate purchasing power | 0 to 100 |
+| Investment duration (years) | Number of years in the projection | A whole number from 1 to 100 |
 
-Monetary and percentage fields accept decimals such as `1250.50` or `6.75`.
-The duration must be a whole number.
+Savings, contributions, and rates accept decimal values, such as `1250.50` or `6.75`. Duration must be a whole number.
 
-## Reading the Results
+## Reading the results
 
-- **Year:** projection year.
-- **Total Savings:** estimated end-of-year balance.
-- **Interest (Year):** gain or loss generated during that year.
-- **Total Interest:** cumulative gain or loss since the start.
-- **Invested Capital:** initial savings plus contributions made to date.
-- **Today's Money:** estimated purchasing power after inflation.
+Summary cards show the final balance, invested capital, total return, and inflation-adjusted balance. Scenario comparison shows the same plan with annual returns two percentage points below and above your expected return, bounded to the accepted range. The growth chart compares nominal balance, invested capital, and purchasing power.
 
-Summary cards show the final-year values. The growth chart compares nominal
-balance, invested capital, and inflation-adjusted balance. On small screens,
-the table scrolls horizontally while the year column remains visible.
+The yearly table contains:
 
-## Example
+- **Year:** The investment year.
+- **Total Savings:** Estimated balance at the end of that year.
+- **Interest (Year):** Return or loss for that year alone.
+- **Total Interest:** Cumulative return or loss.
+- **Invested Capital:** Starting savings plus all contributions to date.
+- **Today's money:** The nominal balance adjusted for expected inflation.
 
-Consider the following assumptions:
+On smaller screens, scroll the table horizontally to see all columns. The year column stays visible.
 
-- initial savings: `$10,000`;
-- yearly contribution: `$2,400`;
-- estimated annual return: `7%`;
-- yearly compounding;
-- duration: `10 years`.
+## Example calculation
 
-The projection assumes the same return in every period. Actual investment
-returns vary and can be negative.
+Use these inputs:
 
-## Calculation Method
+- Starting savings: `$10,000`
+- Yearly contribution: `$2,400`
+- Contribution frequency: `Yearly`
+- Expected annual return: `7%`
+- Compounding frequency: `Yearly`
+- Inflation: `0%`
+- Duration: `10 years`
 
-For each period, the calculator applies the selected return rate to the opening
-balance and then adds the contribution at the end of the period. A new
-contribution therefore begins earning a return in the following compounding
-period.
+At the end of year 10, the estimated balance is **$52,830.99**, invested capital is **$34,000.00**, and total return is **$18,830.99**.
 
-For yearly compounding, the simplified calculation is:
+This example assumes a constant annual return. Actual investment returns can vary each year.
+
+## Calculation method
+
+For each period, the calculator applies the relevant return rate to the opening balance, adds the return, and adds any contribution due at the end of the period. New contributions begin earning returns in subsequent periods.
+
+For yearly contributions and yearly compounding:
 
 ```text
-annual return = opening balance × return rate
-closing balance = opening balance + annual return + annual contribution
+Annual return = Opening balance × Annual return rate
+Closing balance = Opening balance + Annual return + Annual contribution
 ```
 
-The inflation-adjusted value converts each projected nominal balance into an
-estimate of today's purchasing power.
+Inflation-adjusted balances divide the nominal year-end balance by the cumulative inflation factor to estimate today's purchasing power.
 
-## Validation
+## Exporting and sharing
 
-The form displays an inline message when:
+- **Download CSV** exports the yearly results.
+- **Print / Save PDF** opens the browser's print dialog.
+- **Copy share link** creates a URL containing the projection inputs. Opening it restores the calculation in English.
 
-- savings or contributions are negative;
-- the return is outside -100% to 100%;
-- inflation is outside 0% to 100%;
-- duration is not a whole number from 1 to 100;
-- a required field is empty.
+## Validation messages
 
-Correct the value and select **Calculate projection** again.
+All input fields are required. Savings and contributions must be nonnegative, expected return must be between -100% and 100%, inflation must be between 0% and 100%, and duration must be a whole number from 1 to 100. Correct invalid values and click **Calculate projection** again.
 
-## Privacy and Security
+## Privacy
 
-Calculations run entirely in the browser. Financial inputs are not sent to a
-server or stored by the application. Refreshing the page or selecting
-**Reset** clears the current calculation.
+Calculations run in your browser. Shared links include the financial inputs in their URL, so anyone with the link can see those inputs. Reloading an ordinary page clears the calculation; reloading a shared link restores its inputs. **Reset** clears the current form and results but does not remove parameters from a shared URL.
 
 ## Accessibility
 
-The interface supports keyboard navigation. Use `Tab` to move between fields
-and `Enter` or `Space` to activate controls. Validation messages are announced
-to assistive technology, and the layout adapts to mobile, tablet, and desktop
-screens.
+Use `Tab` to move between fields and `Enter` or `Space` to activate buttons. Validation errors are announced to screen readers. The interface supports mobile, tablet, and desktop screens.

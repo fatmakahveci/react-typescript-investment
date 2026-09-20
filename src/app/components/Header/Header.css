@@ -9,34 +9,6 @@
     padding: 3.5rem 0 1rem;
 }
 
-.language-switch {
-    position: absolute;
-    top: 1.25rem;
-    right: 0;
-    display: flex;
-    padding: 0.2rem;
-    border: 1px solid var(--border);
-    border-radius: 0.5rem;
-    background: rgb(5 16 30 / 55%);
-}
-
-.language-switch button {
-    padding: 0.3rem 0.45rem;
-    border: 0;
-    border-radius: 0.3rem;
-    color: var(--text-muted);
-    background: transparent;
-    font: inherit;
-    font-size: 0.68rem;
-    font-weight: 750;
-    cursor: pointer;
-}
-
-.language-switch button[aria-pressed="true"] {
-    color: var(--accent-ink);
-    background: var(--accent);
-}
-
 .header img {
     width: 4.5rem;
     height: 4.5rem;

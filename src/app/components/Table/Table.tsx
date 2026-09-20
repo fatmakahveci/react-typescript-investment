@@ -1,16 +1,14 @@
 import './Table.css';
 import { formatCurrency } from '@/shared/currency';
 import { Currency, YearlyData } from '@/shared/types';
-import { Language, translations } from '@/shared/i18n';
+import { text } from '@/shared/copy';
 
 interface Props {
     data: YearlyData[];
     currency: Currency;
-    language: Language;
 }
 
-const Table = ({ data, currency, language }: Props) => {
-    const text = translations[language];
+const Table = ({ data, currency }: Props) => {
     return (
         <div className="result-wrapper" tabIndex={0} aria-label="Investment results, horizontally scrollable on small screens">
         <table className="result">
