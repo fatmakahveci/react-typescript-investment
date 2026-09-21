@@ -8,7 +8,8 @@ version tags (`v*.*.*`), and manual runs. The `quality` job runs:
 1. Unit and component tests
 2. Production and development dependency audit
 3. ESLint and the production build (including TypeScript checks)
-4. Playwright tests against the production server on desktop and mobile Chromium
+4. Playwright tests against the production server on desktop/mobile Chromium,
+   Firefox and WebKit, including accessibility, keyboard, CSV, sharing and error reporting
 5. A Docker build and HTTP smoke test of the production container
 6. Lighthouse performance, accessibility, best-practices, and SEO checks
 
@@ -61,6 +62,23 @@ Uncaught browser errors and unhandled promise rejections are sent to the same-or
 To use an external monitoring provider later, set `NEXT_PUBLIC_ERROR_REPORTING_ENDPOINT` to an HTTPS endpoint that accepts JSON beacon requests.
 
 The endpoint should apply rate limiting, avoid storing IP addresses unnecessarily, and never place credentials in this public environment variable.
+
+Shared projection query parameters and fragments are excluded from the browser
+report URL. Error messages and stacks still need appropriate retention and
+access controls in the hosting provider's logs. No external alert destination
+has been configured.
+
+## Availability monitoring
+
+The `Availability monitoring` workflow checks `/api/health` and the calculator
+page twice an hour when the repository variable `MONITOR_URL` contains the
+site's HTTPS origin. It can also be run manually. Without this variable the job
+is skipped; no site has been deployed or active uptime monitor claimed.
+
+The workflow fails for HTTP errors, timeouts, unhealthy JSON or a missing
+calculator page. Enable GitHub Actions failure notifications in your account
+to receive these failures. Scheduled workflows are best-effort and are not an
+uptime SLA. External error alert routing requires a hosting/monitoring provider.
 
 ## Dependency maintenance
 

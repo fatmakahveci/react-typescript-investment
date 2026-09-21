@@ -1,44 +1,46 @@
 import { expect, test } from '@playwright/test';
 
-test('keeps a usable keyboard path through calculation and reset', async ({ page }) => {
+test('keeps a usable keyboard path through calculation and reset', async ({ page, browserName }) => {
+  const tab = browserName === 'webkit' && process.platform === 'darwin' ? 'Alt+Tab' : 'Tab';
   await page.goto('/');
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(tab);
   await expect(page.getByRole('link', { name: 'Skip to calculator' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('main')).toBeFocused();
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(tab);
   await expect(page.getByLabel('Currency', { exact: true })).toBeFocused();
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(tab);
   await page.keyboard.type('10000');
-  await page.keyboard.press('Tab'); // Contribution frequency
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(tab); // Contribution frequency
+  await page.keyboard.press(tab);
   await page.keyboard.type('250');
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(tab);
   await page.keyboard.type('7');
-  await page.keyboard.press('Tab'); // Compounding frequency
-  await page.keyboard.press('Tab'); // Inflation
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(tab); // Compounding frequency
+  await page.keyboard.press(tab); // Inflation
+  await page.keyboard.press(tab);
   await page.keyboard.type('10');
   await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { name: /investment snapshot/i })).toBeFocused();
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(tab);
   await expect(page.getByRole('button', { name: /download csv/i })).toBeFocused();
-  await page.keyboard.press('Shift+Tab');
-  await page.keyboard.press('Shift+Tab');
+  await page.keyboard.press(`Shift+${tab}`);
+  await page.keyboard.press(`Shift+${tab}`);
   await expect(page.getByRole('button', { name: 'Reset', exact: true })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.getByLabel('Currency', { exact: true })).toBeFocused();
   await expect(page.locator('.summary')).toHaveCount(0);
 });
 
-test('focuses example results and allows keyboard scrolling of the mobile table', async ({ page }) => {
+test('focuses example results and allows keyboard scrolling of the mobile table', async ({ page, browserName }) => {
+  const tab = browserName === 'webkit' && process.platform === 'darwin' ? 'Alt+Tab' : 'Tab';
   await page.setViewportSize({ width: 320, height: 800 });
   await page.goto('/');
   const example = page.getByRole('button', { name: /try an example/i });
   await example.focus();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { name: /investment snapshot/i })).toBeFocused();
-  for (let i = 0; i < 4; i++) await page.keyboard.press('Tab');
+  for (let i = 0; i < 4; i++) await page.keyboard.press(tab);
   const tableRegion = page.getByRole('region', { name: /investment results/i });
   await expect(tableRegion).toBeFocused();
   await page.keyboard.press('ArrowRight');

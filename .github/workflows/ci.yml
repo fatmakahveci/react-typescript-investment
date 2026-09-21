@@ -41,8 +41,8 @@ jobs:
         run: npm run build
       - name: Prepare standalone server assets
         run: cp -R .next/static .next/standalone/.next/static
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+      - name: Install test browsers
+        run: npx playwright install --with-deps chromium firefox webkit
       - name: End-to-end tests
         run: npm run test:e2e
       - name: Build production container
