@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
-  reporter: process.env.CI ? 'github' : 'list',
+  reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
   use: {
     baseURL: 'http://127.0.0.1:3100',
     trace: 'on-first-retry',
@@ -14,7 +14,10 @@ export default defineConfig({
     { name: 'mobile-chromium', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
-    command: 'npm run dev -- --hostname 127.0.0.1 --port 3100',
+    command: process.env.CI
+      ? 'node .next/standalone/server.js'
+      : 'npm run dev -- --hostname 127.0.0.1 --port 3100',
+    env: { PORT: '3100', HOSTNAME: '127.0.0.1' },
     url: 'http://127.0.0.1:3100',
     reuseExistingServer: false,
     timeout: 120_000,

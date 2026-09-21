@@ -3,10 +3,19 @@ name: CI
 on:
   push:
     branches: [main]
+    tags: ['v*.*.*']
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  NEXT_TELEMETRY_DISABLED: '1'
 
 jobs:
   quality:
@@ -30,12 +39,48 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build
+      - name: Prepare standalone server assets
+        run: cp -R .next/static .next/standalone/.next/static
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: End-to-end tests
         run: npm run test:e2e
+      - name: Build production container
+        run: docker build --tag investment-calculator:ci .
+      - name: Smoke-test production container
+        run: |
+          docker run --detach --name investment-smoke --publish 127.0.0.1:3200:3000 investment-calculator:ci
+          curl --fail --silent --show-error --retry 15 --retry-delay 2 --retry-all-errors --max-time 10 http://127.0.0.1:3200/ --output /tmp/investment-home.html
+          grep -q 'Investment Calculator' /tmp/investment-home.html
+      - name: Container diagnostics and cleanup
+        if: always()
+        run: |
+          if docker container inspect investment-smoke >/dev/null 2>&1; then
+            docker logs investment-smoke
+            docker rm --force investment-smoke
+          fi
       - name: Lighthouse
         uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
         with:
           configPath: ./lighthouserc.json
           uploadArtifacts: true
+      - name: Save browser and Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: quality-reports-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            playwright-report/
+            test-results/
+            .lighthouseci/
+          include-hidden-files: true
+          if-no-files-found: ignore
+          retention-days: 7
+
+  publish:
+    needs: quality
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/publish-container.yml
