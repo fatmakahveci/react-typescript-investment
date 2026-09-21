@@ -59,7 +59,7 @@ npm run build
 npm run test:e2e
 ```
 
-Tests use Vitest, jsdom, and React Testing Library. Pull requests and pushes to `main` run all three checks in GitHub Actions.
+Tests use Vitest, jsdom, and React Testing Library. Pull requests and pushes to `main` run tests, dependency audits, lint, the production build, browser tests, and Lighthouse checks in GitHub Actions.
 
 ## Container package
 

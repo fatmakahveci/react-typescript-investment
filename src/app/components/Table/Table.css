@@ -1,12 +1,12 @@
 .result-wrapper {
-    width: min(100% - 2rem, 56rem);
-    margin: 2rem auto;
+    width: 100%;
+    margin: 0;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
     -webkit-overflow-scrolling: touch;
     border: 1px solid var(--border);
     border-radius: 0.9rem;
-    background: rgb(14 28 46 / 78%);
+    background: var(--surface);
     box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%);
 }
 
@@ -17,7 +17,7 @@
 
 .result {
     width: 100%;
-    min-width: 58rem;
+    min-width: 42rem;
     border-collapse: collapse;
     text-align: right;
 }
@@ -41,7 +41,7 @@
 
 .result tbody {
     color: #d6e0eb;
-    font-size: 0.84rem;
+    font-size: 0.75rem;
     font-variant-numeric: tabular-nums;
 }
 

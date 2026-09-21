@@ -1,10 +1,10 @@
 .chart {
-    width: min(100% - 2rem, 56rem);
-    margin: 1rem auto 0;
+    width: 100%;
+    margin: 0;
     padding: 1.25rem;
     border: 1px solid var(--border);
     border-radius: 0.9rem;
-    background: rgb(14 28 46 / 78%);
+    background: var(--surface);
     box-shadow: 0 1rem 3rem rgb(0 0 0 / 16%);
 }
 
@@ -12,7 +12,8 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 14px;
 }
 
 .chart h2,
@@ -67,16 +68,11 @@
     overflow: visible;
 }
 
-.chart__axis {
-    stroke: rgb(159 176 198 / 24%);
-    stroke-width: 1;
-}
-
 .chart__line {
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 4;
+    stroke-width: 2.5;
     vector-effect: non-scaling-stroke;
 }
 
@@ -89,12 +85,7 @@
     font-size: 12px;
 }
 
-@media (max-width: 36rem) {
-    .chart figcaption {
-        flex-direction: column;
-    }
+.chart__grid { stroke: var(--border); stroke-dasharray: 4 6; }
+.chart__area { fill: url(#growth-fill); }
 
-    .chart__line {
-        stroke-width: 3;
-    }
-}
+@media (max-width: 600px) { .chart__label { font-size: 20px; } }

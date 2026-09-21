@@ -1,6 +1,5 @@
 'use client';
 
-import { formatCurrency } from '@/shared/currency';
 import { text } from '@/shared/copy';
 import { InvestmentInput, YearlyData } from '@/shared/types';
 import { useState } from 'react';
@@ -41,7 +40,7 @@ const ResultActions = ({ input, data }: Props) => {
 
   return (
     <div className="result-actions" aria-label="Result actions">
-      <span>{formatCurrency(data.at(-1)?.savingsEndOfYear ?? 0, input.currency)}</span>
+      <span>Keep your projection</span>
       <button type="button" onClick={downloadCsv}>{text.exportCsv}</button>
       <button type="button" onClick={() => window.print()}>{text.printPdf}</button>
       <button type="button" onClick={copyShareLink}>{copied ? text.copied : text.share}</button>
