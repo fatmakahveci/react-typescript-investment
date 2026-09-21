@@ -6,7 +6,7 @@ const sendError = (error: unknown) => {
     const payload = JSON.stringify({
       message: value.message,
       stack: value.stack,
-      url: window.location.href,
+      url: window.location.origin + window.location.pathname,
       userAgent: navigator.userAgent,
       timestamp: new Date().toISOString(),
     });

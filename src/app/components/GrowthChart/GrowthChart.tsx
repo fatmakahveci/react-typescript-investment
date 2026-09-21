@@ -8,10 +8,10 @@ interface Props {
   currency: Currency;
 }
 
-const WIDTH = 800;
-const HEIGHT = 280;
+const WIDTH = 600;
+const HEIGHT = 320;
 const PADDING = 28;
-const LEFT = 76;
+const LEFT = 130;
 
 const GrowthChart = ({ data, currency }: Props) => {
   if (data.length === 0) return null;

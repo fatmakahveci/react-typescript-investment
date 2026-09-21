@@ -1,0 +1,36 @@
+name: Availability monitoring
+
+on:
+  schedule:
+    - cron: '17,47 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  availability:
+    if: vars.MONITOR_URL != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check health and calculator page
+        env:
+          MONITOR_URL: ${{ vars.MONITOR_URL }}
+        run: |
+          node --input-type=module <<'JS'
+          const base = new URL(process.env.MONITOR_URL);
+          if (base.protocol !== 'https:' || base.username || base.password) {
+            throw new Error('MONITOR_URL must be an HTTPS URL without credentials');
+          }
+          for (const path of ['/api/health', '/']) {
+            const response = await fetch(new URL(path, base), { signal: AbortSignal.timeout(20000) });
+            if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
+            if (path === '/api/health') {
+              if ((await response.json()).status !== 'ok') throw new Error('Unhealthy response');
+            } else if (!(await response.text()).includes('Investment Calculator')) {
+              throw new Error('Calculator page missing');
+            }
+          }
+          console.log('Health endpoint and calculator page are available');
+          JS

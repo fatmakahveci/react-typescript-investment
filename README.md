@@ -61,6 +61,11 @@ npm run test:e2e
 
 Tests use Vitest, jsdom, and React Testing Library. Pull requests and pushes to `main` run tests, dependency audits, lint, the production build, browser tests, and Lighthouse checks in GitHub Actions.
 
+Browser coverage includes desktop/mobile Chromium, Firefox and WebKit, with
+axe accessibility scans, keyboard navigation, CSV export, sharing and error
+reporting checks. See [Accessibility Verification](docs/ACCESSIBILITY.md) for
+manual screen-reader checks and instructions to refresh the demo.
+
 ## Container package
 
 After all CI checks pass, pushes to `main` publish a production image to GitHub Container Registry. Pull requests run validation without publishing. Run the latest image with:

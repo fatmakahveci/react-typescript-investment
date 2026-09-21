@@ -18,7 +18,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 button, input, select { font: inherit; }
-button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .section-label { display: block; color: var(--accent); font-size: .65rem; font-weight: 750; letter-spacing: .14em; }
 .workspace { display: grid; grid-template-columns: 350px minmax(0, 1fr); gap: 28px; width: min(100% - 64px, 1320px); margin: 0 auto; padding-bottom: 40px; align-items: start; }
 .workspace__inputs, .workspace__results { min-width: 0; }

@@ -1,3 +1,5 @@
+'use client';
+
 import './Table.css';
 import { formatCurrency } from '@/shared/currency';
 import { Currency, YearlyData } from '@/shared/types';
@@ -10,7 +12,12 @@ interface Props {
 
 const Table = ({ data, currency }: Props) => {
     return (
-        <div className="result-wrapper" tabIndex={0} aria-label="Investment results, horizontally scrollable on small screens">
+        <div className="result-wrapper" role="region" tabIndex={0} aria-label="Investment results, horizontally scrollable on small screens"
+            onKeyDown={(event) => {
+                if (event.target !== event.currentTarget || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+                event.preventDefault();
+                event.currentTarget.scrollLeft += event.key === 'ArrowRight' ? 48 : -48;
+            }}>
         <table className="result">
             <caption>{text.tableTitle}</caption>
             <thead>
