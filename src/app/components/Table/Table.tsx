@@ -10,7 +10,7 @@ interface Props {
 
 const Table = ({ data, currency }: Props) => {
     return (
-        <div className="result-wrapper" tabIndex={0} aria-label="Investment results, horizontally scrollable on small screens">
+        <div className="result-wrapper" role="region" tabIndex={0} aria-label="Investment results, horizontally scrollable on small screens">
         <table className="result">
             <caption>{text.tableTitle}</caption>
             <thead>

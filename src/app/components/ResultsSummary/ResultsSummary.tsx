@@ -17,7 +17,7 @@ const ResultsSummary = ({ data, currency }: Props) => {
     <section className="summary" aria-labelledby="summary-title">
       <div className="summary__heading">
         <p>{text.projectionAt} {finalYear.year}</p>
-        <h2 id="summary-title">{text.snapshot}</h2>
+        <h2 id="summary-title" tabIndex={-1}>{text.snapshot}</h2>
       </div>
       <dl className="summary__cards">
         <div>

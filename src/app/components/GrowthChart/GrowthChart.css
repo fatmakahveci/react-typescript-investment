@@ -51,14 +51,13 @@
 }
 
 .chart__dot {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
+    width: 1.25rem;
+    height: 0;
+    border-top: 3px solid var(--accent);
 }
 
-.chart__dot--balance { background: var(--accent); }
-.chart__dot--capital { background: #7da4ff; }
-.chart__dot--real { background: #f5b971; }
+.chart__dot--capital { border-color: #7da4ff; border-top-style: dashed; }
+.chart__dot--real { border-color: #f5b971; border-top-style: dotted; }
 
 .chart svg {
     display: block;
@@ -77,8 +76,8 @@
 }
 
 .chart__line--balance { stroke: var(--accent); }
-.chart__line--capital { stroke: #7da4ff; }
-.chart__line--real { stroke: #f5b971; }
+.chart__line--capital { stroke: #7da4ff; stroke-dasharray: 8 5; }
+.chart__line--real { stroke: #f5b971; stroke-dasharray: 2 5; }
 
 .chart__label {
     fill: var(--text-muted);

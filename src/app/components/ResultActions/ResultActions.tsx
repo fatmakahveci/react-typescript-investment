@@ -39,7 +39,7 @@ const ResultActions = ({ input, data }: Props) => {
   };
 
   return (
-    <div className="result-actions" aria-label="Result actions">
+    <div className="result-actions" role="group" aria-label="Result actions">
       <span>Keep your projection</span>
       <button type="button" onClick={downloadCsv}>{text.exportCsv}</button>
       <button type="button" onClick={() => window.print()}>{text.printPdf}</button>
