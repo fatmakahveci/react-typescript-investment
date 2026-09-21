@@ -22,5 +22,20 @@ test('restores a shared projection from the URL', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Investment Calculator', exact: true })).toBeVisible();
   await expect(page.getByRole('heading', { name: /investment snapshot/i })).toBeVisible();
   await expect(page.getByLabel(/current savings/i)).toHaveValue('5000');
-  await expect(page.getByText(/€/).first()).toBeVisible();
+  await expect(page.getByLabel('Currency', { exact: true })).toHaveValue('EUR');
+  await expect(page.locator('.summary').getByText(/€/).first()).toBeVisible();
+});
+
+test('loads the example and resets the workspace', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: /try an example/i }).click();
+  await expect(page.getByRole('heading', { name: /investment snapshot/i })).toBeVisible();
+  await expect(page.getByLabel(/current savings/i)).toHaveValue('10000');
+  await expect(page.getByLabel(/monthly contribution/i)).toHaveValue('250');
+  await expect(page.locator('.summary')).toContainText('$63,367.82');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.getByRole('button', { name: 'Reset', exact: true }).click();
+  await expect(page.getByRole('button', { name: /try an example/i })).toBeVisible();
+  await expect(page.getByLabel(/current savings/i)).toHaveValue('');
+  await expect(page.locator('.summary')).toHaveCount(0);
 });

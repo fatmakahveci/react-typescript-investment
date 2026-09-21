@@ -19,7 +19,7 @@ The endpoint should apply rate limiting, avoid storing IP addresses unnecessaril
 GitHub Actions runs the following checks before deployment:
 
 1. Unit and component tests
-2. Production dependency audit
+2. Production and development dependency audit
 3. ESLint
 4. Production build
 5. Playwright flows on desktop and mobile Chromium
