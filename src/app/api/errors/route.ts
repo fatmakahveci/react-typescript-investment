@@ -4,8 +4,17 @@ export async function POST(request: Request) {
   const origin = request.headers.get('origin');
   const requestUrl = new URL(request.url);
 
-  if (origin && origin !== requestUrl.origin) {
-    return new Response(null, { status: 403 });
+  if (origin) {
+    try {
+      const source = new URL(origin);
+      // Next's internal request URL can use localhost behind a proxy.
+      // Compare the browser origin with the actual HTTP Host instead.
+      if (!['http:', 'https:'].includes(source.protocol) || source.host !== (request.headers.get('host') ?? requestUrl.host)) {
+        return new Response(null, { status: 403 });
+      }
+    } catch {
+      return new Response(null, { status: 403 });
+    }
   }
 
   const contentLength = Number(request.headers.get('content-length') ?? 0);

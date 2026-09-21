@@ -14,6 +14,33 @@ const baseInput: InvestmentInput = {
 };
 
 describe('calculateInvestment', () => {
+  it('reduces savings with negative returns and no contributions', () => {
+    const result = calculateInvestment({ ...baseInput, contribution: 0, expectedReturn: -10 });
+    expect(result[1].savingsEndOfYear).toBeCloseTo(810, 8);
+    expect(result[1].totalInterest).toBeCloseTo(-190, 8);
+    expect(result[1].investedCapital).toBe(1000);
+  });
+
+  it('handles complete annual loss before the end-of-year contribution', () => {
+    const result = calculateInvestment({ ...baseInput, expectedReturn: -100 });
+    expect(result.map((row) => row.savingsEndOfYear)).toEqual([100, 100]);
+  });
+
+  it('keeps an empty portfolio at zero for 100 years', () => {
+    const result = calculateInvestment({ ...baseInput, currentSavings: 0, contribution: 0, duration: 100 });
+    expect(result).toHaveLength(100);
+    expect(result.every((row) => row.savingsEndOfYear === 0 && row.totalInterest === 0)).toBe(true);
+  });
+
+  it('matches the compound-interest formula over 100 years without contributions', () => {
+    const final = calculateInvestment({ ...baseInput, contribution: 0, duration: 100, expectedReturn: 7, inflationRate: 3 }).at(-1)!;
+    expect(final.savingsEndOfYear).toBeCloseTo(1000 * 1.07 ** 100, 4);
+    expect(final.inflationAdjustedSavings).toBeCloseTo(1000 * (1.07 / 1.03) ** 100, 4);
+  });
+
+  it.each([Number.NaN, Infinity, -Infinity])('rejects non-finite savings: %s', (currentSavings) => {
+    expect(() => calculateInvestment({ ...baseInput, currentSavings })).toThrow(RangeError);
+  });
   it('adds yearly contributions after applying the yearly return', () => {
     const result = calculateInvestment(baseInput);
 

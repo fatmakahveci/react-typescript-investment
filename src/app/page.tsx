@@ -3,7 +3,7 @@
 import { calculateInvestment, validateInvestment } from '@/shared/investment';
 import { text } from '@/shared/copy';
 import { Currency, Frequency, InvestmentInput, YearlyData } from '@/shared/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Form from './components/Form/Form';
 import GrowthChart from './components/GrowthChart/GrowthChart';
 import Header from './components/Header/Header';
@@ -32,6 +32,25 @@ const parseSharedInput = (): InvestmentInput | null => {
 
 const Home = () => {
   const [formData, setFormData] = useState<InvestmentInput | null>(null);
+  const focusTarget = useRef<'summary-title' | 'currency' | null>(null);
+
+  const showProjection = (input: InvestmentInput) => {
+    focusTarget.current = 'summary-title';
+    setFormData(input);
+  };
+
+  const resetProjection = () => {
+    focusTarget.current = 'currency';
+    setFormData(null);
+    document.getElementById('currency')?.focus();
+  };
+
+  useEffect(() => {
+    if (focusTarget.current) {
+      document.getElementById(focusTarget.current)?.focus();
+      focusTarget.current = null;
+    }
+  }, [formData]);
 
   useEffect(() => {
     const sharedInput = parseSharedInput();
@@ -45,15 +64,15 @@ const Home = () => {
   return (
     <>
       <Header />
-      <main className="workspace" id="main-content">
+      <main className="workspace" id="main-content" tabIndex={-1}>
         <div className="workspace__inputs">
-          <Form key={formData ? JSON.stringify(formData) : 'empty'} initialValues={formData} onCalculate={setFormData} onReset={() => setFormData(null)} />
+          <Form key={formData ? JSON.stringify(formData) : 'empty'} initialValues={formData} onCalculate={showProjection} onReset={resetProjection} />
           <aside className="assumption" aria-label={text.methodTitle}>
             <strong>{text.methodTitle}</strong>
             <span>{text.method}</span>
           </aside>
         </div>
-        <div className="workspace__results" aria-live="polite" aria-atomic="false">
+        <div className="workspace__results">
           {!formData ? (
             <section className="welcome" aria-labelledby="welcome-title">
               <span className="section-label">YOUR NEXT CHAPTER</span>
@@ -75,7 +94,7 @@ const Home = () => {
                 <div><span>03</span><strong>Make it your plan</strong><p>Adjust, compare, and save your projection.</p></div>
               </div>
               <div className="welcome__action">
-                <button type="button" className="button" onClick={() => setFormData({ currentSavings: 10000, contribution: 250, contributionFrequency: 'monthly', expectedReturn: 7, compoundingFrequency: 'monthly', inflationRate: 2.5, duration: 10, currency: 'USD' })}>Try an example <span aria-hidden="true">↗</span></button>
+                <button type="button" className="button" onClick={() => showProjection({ currentSavings: 10000, contribution: 250, contributionFrequency: 'monthly', expectedReturn: 7, compoundingFrequency: 'monthly', inflationRate: 2.5, duration: 10, currency: 'USD' })}>Try an example <span aria-hidden="true">↗</span></button>
                 <span>$10,000 to start · $250/month · 10 years</span>
               </div>
             </section>
