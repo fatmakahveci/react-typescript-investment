@@ -63,14 +63,14 @@ Tests use Vitest, jsdom, and React Testing Library. Pull requests and pushes to 
 
 ## Container package
 
-Every push to `main` publishes a production image to GitHub Container Registry. Run the latest image with:
+After all CI checks pass, pushes to `main` publish a production image to GitHub Container Registry. Pull requests run validation without publishing. Run the latest image with:
 
 ```bash
 docker pull ghcr.io/fatmakahveci/react-typescript-investment:latest
 docker run --rm -p 3000:3000 ghcr.io/fatmakahveci/react-typescript-investment:latest
 ```
 
-Then open [http://localhost:3000](http://localhost:3000). Version tags such as `v1.0.0` also publish a matching image tag.
+Then open [http://localhost:3000](http://localhost:3000). Version tags such as `v1.0.0` also run CI and publish a matching image tag when their commit belongs to `main`. See the [Production Guide](docs/PRODUCTION.md) for manual runs, reports, and rollback instructions.
 
 ## Technology
 
@@ -82,5 +82,5 @@ Then open [http://localhost:3000](http://localhost:3000). Version tags such as `
 
 - [Changelog](CHANGELOG.md)
 - [Contributing guide](.github/CONTRIBUTING.md)
-- [Security policy](.github/SECURITY.md)
+- [Security policy](SECURITY.md)
 - [License](LICENSE.md)
