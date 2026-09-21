@@ -1,56 +1,11 @@
-.header {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.25rem;
-    width: min(100% - 2rem, 42rem);
-    margin: 0 auto;
-    padding: 3.5rem 0 1rem;
-}
-
-.header img {
-    width: 4.5rem;
-    height: 4.5rem;
-    object-fit: contain;
-    filter: drop-shadow(0 0.75rem 1.5rem rgb(0 0 0 / 25%));
-}
-
-.header p {
-    margin: 0;
-}
-
-.header__eyebrow {
-    color: var(--accent);
-    font-size: 0.72rem;
-    font-weight: 750;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-}
-
-.header h1 {
-    margin: 0.15rem 0 0.35rem;
-    font-size: clamp(1.8rem, 5vw, 2.6rem);
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-}
-
-.header__description {
-    max-width: 34rem;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-}
-
-@media (max-width: 34rem) {
-    .header {
-        align-items: center;
-        flex-direction: column;
-        padding-top: 2.5rem;
-        text-align: center;
-    }
-
-    .header img {
-        width: 3.5rem;
-        height: 3.5rem;
-    }
-}
+.header { width: min(100% - 64px, 1320px); margin: 0 auto; padding: 24px 0 32px; }
+.header__brand { display: flex; align-items: center; gap: 10px; padding-bottom: 20px; margin-bottom: 28px; border-bottom: 1px solid var(--border); font-size: .65rem; letter-spacing: .16em; font-weight: 750; }
+.header__brand img { width: 30px; height: 30px; object-fit: contain; }
+.header__intro { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.header p { margin: 0; }
+.header__eyebrow { color: var(--accent); font-size: .67rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.header h1 { margin: 6px 0 8px; font-size: clamp(1.8rem, 3.3vw, 2.7rem); font-weight: 600; letter-spacing: -.045em; line-height: 1.15; }
+.header__description { color: var(--text-muted); font-size: .85rem; max-width: 600px; }
+.header__badge { display: flex; align-items: center; gap: 8px; flex-shrink: 0; padding: 9px 13px; border: 1px solid #314b42; border-radius: 30px; font-size: .7rem; color: #bce8d5; background: #142b24; }
+.header__badge i { height: 6px; width: 6px; border-radius: 50%; background: var(--accent); }
+@media (max-width: 800px) { .header { width: min(100% - 32px, 620px); padding-top: 16px; } .header__badge { display: none; } .header__brand { margin-bottom: 24px; padding-bottom: 14px; } }

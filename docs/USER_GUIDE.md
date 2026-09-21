@@ -15,6 +15,8 @@ The calculator shows how your savings could change over time, year by year. Ente
 
 Change the values and calculate again to update the projection. Click **Reset** to clear the form and results.
 
+To explore before entering your own values, select **Try an example**. It loads a $10,000 starting balance, $250 monthly contributions, a 7% expected annual return, 2.5% inflation, and a 10-year duration. You can edit these values and calculate again.
+
 ## Input fields
 
 | Field | Description | Accepted values |

@@ -68,7 +68,7 @@ const Form = ({ onCalculate, onReset, initialValues }: Props) => {
     };
 
     const currencySymbol = ({ USD: '$', EUR: '€', GBP: '£', TRY: '₺' } as const)[formData.currency as Currency];
-    const localizedContributionLabel = formData.contributionFrequency === 'monthly' ? text.monthlyContribution : text.yearlyContribution;
+    const contributionLabel = formData.contributionFrequency === 'monthly' ? text.monthlyContribution : text.yearlyContribution;
     const errorText = {
         currentSavings: text.invalidCurrentSavings,
         contribution: text.invalidContribution,
@@ -80,6 +80,7 @@ const Form = ({ onCalculate, onReset, initialValues }: Props) => {
     return (
         <form onSubmit={submitHandler} onReset={resetHandler} className="form">
             <div className="form__intro">
+                <span className="section-label">01 / YOUR INPUTS</span>
                 <h2>{text.formTitle}</h2>
                 <p>{text.formDescription}</p>
             </div>
@@ -88,10 +89,10 @@ const Form = ({ onCalculate, onReset, initialValues }: Props) => {
                 <p>
                     <label htmlFor="currency">{text.currency}</label>
                     <select id="currency" value={formData.currency} onChange={(event) => handleChange('currency', event.target.value)}>
-                        <option value="USD">USD — US Dollar</option>
-                        <option value="EUR">EUR — Euro</option>
-                        <option value="GBP">GBP — British Pound</option>
-                        <option value="TRY">TRY — Turkish Lira</option>
+                        <option value="USD">USD ($)</option>
+                        <option value="EUR">EUR (€)</option>
+                        <option value="GBP">GBP (£)</option>
+                        <option value="TRY">TRY (₺)</option>
                     </select>
                 </p>
                 <p>
@@ -110,7 +111,7 @@ const Form = ({ onCalculate, onReset, initialValues }: Props) => {
                     </select>
                 </p>
                 <p>
-                    <label htmlFor="contribution">{localizedContributionLabel} ({currencySymbol})</label>
+                    <label htmlFor="contribution">{contributionLabel} ({currencySymbol})</label>
                     <input id="contribution" type="number" value={formData.contribution} onChange={(event) => handleChange('contribution', event.target.value)} placeholder={formData.contributionFrequency === 'monthly' ? 'e.g. 200' : 'e.g. 2,400'} min="0" step="0.01" required aria-invalid={Boolean(errors.contribution)} aria-describedby={errors.contribution ? 'contribution-error' : undefined} />
                     {errors.contribution && <span id="contribution-error" className="error" role="alert">{errorText.contribution}</span>}
                 </p>

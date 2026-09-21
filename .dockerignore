@@ -11,3 +11,7 @@ npm-debug.log*
 Dockerfile*
 README.md
 docs
+demo.gif
+AGENTS.md
+CLAUDE.md
+*.tsbuildinfo
